@@ -3,7 +3,11 @@ import Login from "./pages/Login";
 import { useEffect } from "react";
 import { Toaster } from "sonner";
 import Main from "./pages/Main";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import {
+  ProtectedDashboardRoute,
+  ProtectedLoginRoute,
+} from "./components/ProtectedRoute";
 
 const App = () => {
   useEffect(() => {
@@ -13,10 +17,12 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/dashboard" element={<div>Dashboard</div>} />
+        <Route element={<ProtectedLoginRoute />}>
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+        <Route element={<ProtectedDashboardRoute />}>
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
       </Routes>
       <Toaster />

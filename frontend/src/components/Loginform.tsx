@@ -57,10 +57,11 @@ export function LoginForm() {
         toast.success(`${values.username} logged in successfully`);
         localStorage.setItem("token", data.token);
         setTimeout(() => {
-          navigate("/");
+          navigate("/dashboard");
         }, 1500);
       }
     } catch (error) {
+      console.error("Login error:", error);
       toast.error("Invalid credentials");
     }
   }
