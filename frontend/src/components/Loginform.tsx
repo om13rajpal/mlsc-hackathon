@@ -56,6 +56,7 @@ export function LoginForm() {
       if (data.status) {
         toast.success(`${values.username} logged in successfully`);
         localStorage.setItem("token", data.data.token);
+        localStorage.setItem("teamId", data.data.user.teamId);
         setTimeout(() => {
           navigate("/dashboard");
         }, 1500);
