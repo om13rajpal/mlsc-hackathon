@@ -5,6 +5,7 @@ export interface User extends Document {
   password: string;
   email: string;
   team: string;
+  teamId: Schema.Types.ObjectId;
 }
 
 const userSchema = new Schema<User>({
@@ -31,7 +32,11 @@ const userSchema = new Schema<User>({
   team: {
     type: String,
     trim: true,
-    default: ""
+    default: "",
+  },
+  teamId: {
+    type: Schema.Types.ObjectId,
+    ref: "Team",
   },
 });
 

@@ -1,10 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
+import { toast } from "sonner";
 
 export function LoginButton() {
   const navigate = useNavigate();
   function handleClick() {
-    navigate("/login");
+    toast.success("Hacking the system...");
+    setTimeout(() => {
+      navigate("/login");
+    }, 1500);
   }
   return (
     <div className="mt-6 flex justify-center text-center">

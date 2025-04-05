@@ -38,7 +38,7 @@ export async function createTeamHandler(req: Request, res: Response) {
 
 export async function addMemberHandler(req: Request, res: Response) {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name, memberName } = req.body;
 
   try {
     const updatedTeam = await teamModel.findOneAndUpdate(
@@ -48,6 +48,7 @@ export async function addMemberHandler(req: Request, res: Response) {
       {
         $push: {
           members: id,
+          membersName: memberName,
         },
       },
       {
