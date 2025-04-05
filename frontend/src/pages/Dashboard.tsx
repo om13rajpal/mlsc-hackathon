@@ -54,6 +54,7 @@ const Dashboard = () => {
   return (
     <>
       <Navbar score={score} />
+      
       <div className="text-3xl font-bold text-center pt-20">
         <Header />
       </div>
