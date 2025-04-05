@@ -6,6 +6,7 @@ import { TeamReveal } from "@/components/TeamReveal";
 import { Header } from "@/components/Header";
 import { AlertHeader } from "@/components/Alert";
 import { BASE_URL } from "@/constants/constants";
+import { Rules } from "@/components/Rules";
 
 const Dashboard = () => {
   const [response, setResponse] = useState<any[]>([]);
@@ -52,35 +53,47 @@ const Dashboard = () => {
   }
 
   return (
-    <>
+    <div className="w-screen">
       <Navbar score={score} />
-      
-      <div className="text-3xl font-bold text-center pt-20">
+      <div className="mx-20 pt-30">
+        <Rules />
+      </div>
+      <div className="text-3xl font-bold text-center pt-20 mb-5">
         <Header />
       </div>
-
-      {/* ✅ Pass `team` as prop to fix the error */}
-      <TeamReveal team={team} />
+      {team.length > 0 ? (
+        <TeamReveal team={team} />
+      ) : (
+        <div className="text-3xl pt-20 mb-5 w-screen flex items-center justify-center">
+          No Team Found
+        </div>
+      )}
 
       <div className="px-20">
         <AlertHeader />
       </div>
       <div className="pt-5 w-screen flex items-center justify-center">
         <div className="grid grid-cols-3 gap-4 p-4">
-          {response.map((commit: any) => (
-            <CommitCard
-              key={commit.sha}
-              link={commit.html_url}
-              avatar={commit.committer?.avatar_url || ""}
-              avatarFallback=""
-              date={commit.commit?.author?.date}
-              title={commit.commit?.author?.name}
-              description={commit.commit?.message}
-            />
-          ))}
+          {response.length > 0 ? (
+            response.map((commit: any) => (
+              <CommitCard
+                key={commit.sha}
+                link={commit.html_url}
+                avatar={commit.committer?.avatar_url || ""}
+                avatarFallback=""
+                date={commit.commit?.author?.date}
+                title={commit.commit?.author?.name}
+                description={commit.commit?.message}
+              />
+            ))
+          ) : (
+            <div className="w-screen flex items-center justify-center text-zinc-700">
+              No commits yet
+            </div>
+          )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
