@@ -1,1 +1,1 @@
-export const BASE_URL = "https://hackathon.mlsc.tech"; 
+export const BASE_URL = "https://api.mlsc.tech"; 

@@ -73,9 +73,9 @@ const Dashboard = () => {
         <AlertHeader />
       </div>
       <div className="pt-5 w-screen flex items-center justify-center">
-        <div className="grid grid-cols-3 gap-4 p-4">
-          {response.length > 0 ? (
-            response.map((commit: any) => (
+        {response.length > 0 ? (
+          response.map((commit: any) => (
+            <div className="grid grid-cols-3 gap-4 p-4">
               <CommitCard
                 key={commit.sha}
                 link={commit.html_url}
@@ -85,13 +85,13 @@ const Dashboard = () => {
                 title={commit.commit?.author?.name}
                 description={commit.commit?.message}
               />
-            ))
-          ) : (
-            <div className="w-screen flex items-center justify-center text-zinc-700">
-              No commits yet
             </div>
-          )}
-        </div>
+          ))
+        ) : (
+          <div className="text-zinc-700 text-center w-screen">
+            No commits yet
+          </div>
+        )}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 import { motion } from "motion/react";
 import { cn } from "../../lib/utils";
+import { Button } from "./button";
 
 type Direction = "TOP" | "LEFT" | "BOTTOM" | "RIGHT";
 
@@ -56,7 +57,7 @@ export function HoverBorderGradient({
     }
   }, [hovered]);
   return (
-    <Tag
+    <Button
       onMouseEnter={() => {
         setHovered(true);
       }}
@@ -94,6 +95,6 @@ export function HoverBorderGradient({
         transition={{ ease: "linear", duration: duration ?? 1 }}
       />
       <div className="bg-black absolute z-1 flex-none inset-[2px] rounded-[100px]" />
-    </Tag>
+    </Button>
   );
 }
