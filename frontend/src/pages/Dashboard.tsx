@@ -36,13 +36,12 @@ const Dashboard = () => {
         try {
           const url = `${GITHUB_URL}/${repo}/commits`;
           console.log(url);
-          const response = await axios.get(`${GITHUB_URL}/${repo}/commits`, {
+          const response = await axios.get(url, {
             headers: {
               Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
             },
           });
           console.log(response.data);
-          console.log(response.data[0].html_url);
           setResponse(response.data);
         } catch (error: any) {
           console.error("Error fetching commits:", error.message);
@@ -75,8 +74,8 @@ const Dashboard = () => {
       </div>
       <div className="pt-5 w-screen flex items-center justify-center">
         {response.length > 0 ? (
-          response.map((commit: any) => (
-            <div className="grid grid-cols-3 gap-4 p-4">
+          <div className="grid grid-cols-3 gap-4 p-4">
+            {response.map((commit: any) => (
               <CommitCard
                 key={commit.sha}
                 link={commit.html_url}
@@ -86,8 +85,8 @@ const Dashboard = () => {
                 title={commit.commit?.author?.name}
                 description={commit.commit?.message}
               />
-            </div>
-          ))
+            ))}
+          </div>
         ) : (
           <div className="text-zinc-700 text-center w-screen">
             No commits yet
