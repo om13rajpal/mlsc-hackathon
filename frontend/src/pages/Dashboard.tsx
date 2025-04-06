@@ -5,7 +5,7 @@ import { CommitCard } from "@/components/CommitCart";
 import { TeamReveal } from "@/components/TeamReveal";
 import { Header } from "@/components/Header";
 import { AlertHeader } from "@/components/Alert";
-import { BASE_URL } from "@/constants/constants";
+import { BASE_URL, GITHUB_URL } from "@/constants/constants";
 import { Rules } from "@/components/Rules";
 
 const Dashboard = () => {
@@ -15,7 +15,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     getTeamDetails();
-    getCommits();
   }, []);
 
   async function getTeamDetails() {
@@ -28,27 +27,29 @@ const Dashboard = () => {
         },
       });
       console.log(response.data);
-      setTeam(response.data.data.membersName);
-      setScore(response.data.data.score);
+      if (response.data.status) {
+        setTeam(response.data.data.membersName);
+        setScore(response.data.data.score);
+        const repo = `Team${response.data.data.name}`;
+
+        console.log(import.meta.env.VITE_TOKEN);
+        try {
+          const url = `${GITHUB_URL}/${repo}/commits`;
+          console.log(url);
+          const response = await axios.get(`${GITHUB_URL}/${repo}/commits`, {
+            headers: {
+              Authorization: `Bearer ${import.meta.env.VITE_TOKEN}`,
+            },
+          });
+          console.log(response.data);
+          console.log(response.data[0].html_url);
+          setResponse(response.data);
+        } catch (error: any) {
+          console.error("Error fetching commits:", error.message);
+        }
+      }
     } catch (error: any) {
       console.error("Error fetching team details:", error.message);
-    }
-  }
-
-  async function getCommits() {
-    try {
-      const response = await axios.get(
-        "https://api.github.com/repos/om13rajpal/Canard-Frontend/commits",
-        {
-          headers: {
-            Authorization: `Bearer`,
-          },
-        }
-      );
-      console.log(response.data[0].html_url);
-      setResponse(response.data);
-    } catch (error: any) {
-      console.error("Error fetching commits:", error.message);
     }
   }
 
